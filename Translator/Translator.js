@@ -9,7 +9,14 @@ import {
   Picker,
   Image,
 } from 'react-native';
+// import {Picker} from '@react-native-picker/picker';
 import Languages from './/languages.json';
+import {
+  PowerTranslator,
+  ProviderTypes,
+  TranslatorConfiguration,
+  TranslatorFactory,
+} from 'react-native-power-translator';
 
 export default class Translator extends Component {
   constructor(props) {
@@ -25,6 +32,11 @@ export default class Translator extends Component {
   }
 
   render() {
+    TranslatorConfiguration.setConfig(
+      ProviderTypes.Google,
+      'XXXX',
+      this.state.languageCode,
+    );
     return (
       <View style={styles.container}>
         <View style={styles.input}>
@@ -47,7 +59,10 @@ export default class Translator extends Component {
           ))}
         </Picker>
 
-        <View style={styles.output}>{/* output text displays here.. */}</View>
+        <View style={styles.output}>
+          {/* output text displays here.. */}
+          {this.state.submit && <PowerTranslator text={this.state.inputText} />}
+        </View>
         <TouchableOpacity
           style={styles.submitButton}
           onPress={this.handleTranslate}>
